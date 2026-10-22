@@ -3,91 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Kalkulator Sistem Bilangan</title>
 
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            max-width: 600px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .hasil {
+            font-size: 40px;
+            font-weight: bold;
+            color: #198754;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-    <div class="container mt-5">
-        <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+<div class="container mt-5 mb-5">
 
-            <h2 class="text-center mb-4">Kalkulator Sistem Bilangan</h2>
+    <div class="card shadow">
 
-            <!-- Input -->
-            <div class="mb-3">
-                <label class="form-label">Masukkan Bilangan</label>
-                <input type="text" id="angka" class="form-control" placeholder="Contoh: 1010">
+        <!-- Judul -->
+        <div class="card-header">
+            <h2>Kalkulator Sistem Bilangan</h2>
+        </div>
+
+        <div class="card-body p-4">
+
+            <!-- Input Bilangan -->
+            <div class="mb-4">
+                <label for="angka" class="form-label fw-bold">
+                    Masukkan Bilangan
+                </label>
+
+                <input
+                    type="text"
+                    id="angka"
+                    class="form-control form-control-lg"
+                    placeholder="Contoh: 1010"
+                >
             </div>
 
-            <!-- Sistem bilangan input -->
-            <div class="mb-3">
-                <label class="form-label">Sistem Bilangan Input</label>
-                <select id="sistemInput" class="form-select">
-                    <option value="2">Biner</option>
-                    <option value="8">Oktal</option>
-                    <option value="10" selected>Desimal</option>
-                    <option value="16">Hexadesimal</option>
+            <!-- Sistem Bilangan Asal -->
+            <div class="mb-4">
+                <label for="sistemInput" class="form-label fw-bold">
+                    Sistem Bilangan Asal
+                </label>
+
+                <select id="sistemInput" class="form-select form-select-lg">
+                    <option value="2">Biner (Basis 2)</option>
+                    <option value="8">Oktal (Basis 8)</option>
+                    <option value="10" selected>Desimal (Basis 10)</option>
+                    <option value="16">Hexadesimal (Basis 16)</option>
                 </select>
             </div>
 
-            <!-- Sistem bilangan hasil -->
-            <div class="mb-3">
-                <label class="form-label">Sistem Bilangan Hasil</label>
-                <select id="sistemHasil" class="form-select">
-                    <option value="2">Biner</option>
-                    <option value="8">Oktal</option>
-                    <option value="10" selected>Desimal</option>
-                    <option value="16">Hexadesimal</option>
+            <!-- Sistem Bilangan Tujuan -->
+            <div class="mb-4">
+                <label for="sistemHasil" class="form-label fw-bold">
+                    Konversi Ke
+                </label>
+
+                <select id="sistemHasil" class="form-select form-select-lg">
+                    <option value="2">Biner (Basis 2)</option>
+                    <option value="8">Oktal (Basis 8)</option>
+                    <option value="10">Desimal (Basis 10)</option>
+                    <option value="16">Hexadesimal (Basis 16)</option>
                 </select>
             </div>
 
             <!-- Tombol -->
-            <button onclick="konversikan()" class="btn btn-primary w-100">
+            <button
+                type="button"
+                onclick="konversikan()"
+                class="btn btn-primary btn-lg w-100">
                 Konversi
             </button>
 
+            <hr class="my-4">
+
             <!-- Hasil -->
-            <div class="text-center mt-4">
-                <label class="form-label">Hasil</label>
-                <div id="hasil" class="fs-1 fw-bold text-primary">
+            <div class="text-center">
+
+                <div class="fs-5 fw-bold mb-2">
+                    Hasil Konversi:
+                </div>
+
+                <div id="hasil" class="hasil">
                     -
                 </div>
+
             </div>
 
         </div>
     </div>
 
-    <script>
-        function konversikan() {
+</div>
 
-            let angka = document.getElementById("angka").value.trim();
-            let sistemInput = parseInt(document.getElementById("sistemInput").value);
-            let sistemHasil = parseInt(document.getElementById("sistemHasil").value);
-            let hasil = document.getElementById("hasil");
 
-            if (angka === "") {
-                hasil.innerHTML = "Masukkan angka!";
-                return;
-            }
+<script>
 
-            // Ubah input ke desimal
-            let desimal = parseInt(angka, sistemInput);
+function konversikan() {
 
-            // Validasi angka
-            if (isNaN(desimal)) {
-                hasil.innerHTML = "Input tidak valid!";
-                return;
-            }
+    // Mengambil nilai dari input
+    let angka = document.getElementById("angka").value.trim();
 
-            // Konversi desimal ke sistem tujuan
-            let konversi = desimal.toString(sistemHasil).toUpperCase();
+    let sistemInput = parseInt(
+        document.getElementById("sistemInput").value
+    );
 
-            hasil.innerHTML = konversi;
-        }
-    </script>
+    let sistemHasil = parseInt(
+        document.getElementById("sistemHasil").value
+    );
+
+    let hasil = document.getElementById("hasil");
+
+
+    // Jika input kosong
+    if (angka === "") {
+
+        hasil.innerHTML = "Masukkan angka!";
+
+        return;
+    }
+
+
+    // Bersihkan format hex seperti 0xFF
+    if (sistemInput === 16) {
+        angka = angka.replace(/^0x/i, "");
+    }
+
+
+    // Validasi berdasarkan sistem bilangan
+    let pola;
+
+    if (sistemInput === 2) {
+
+        pola = /^[01]+$/;
+
+    } else if (sistemInput === 8) {
+
+        pola = /^[0-7]+$/;
+
+    } else if (sistemInput === 10) {
+
+        pola = /^[0-9]+$/;
+
+    } else if (sistemInput === 16) {
+
+        pola = /^[0-9a-fA-F]+$/;
+    }
+
+
+    // Jika angka tidak sesuai dengan basis
+    if (!pola.test(angka)) {
+
+        hasil.innerHTML = "Input tidak valid!";
+
+        return;
+    }
+
+
+    // Konversi ke desimal
+    let desimal = parseInt(angka, sistemInput);
+
+
+    // Konversi dari desimal ke sistem tujuan
+    let hasilKonversi = desimal
+        .toString(sistemHasil)
+        .toUpperCase();
+
+
+    // Menampilkan hasil
+    hasil.innerHTML = hasilKonversi;
+}
+
+</script>
 
 </body>
 </html>
