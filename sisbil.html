@@ -11,11 +11,12 @@
 
     <style>
         body {
-            background-color: #f4f6f9;
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .card {
@@ -24,23 +25,34 @@
             overflow: hidden;
         }
 
-        .card-header {
-            background-color: #0d6efd;
+        .judul {
+            background: #0d6efd;
             color: white;
+            padding: 25px 15px;
             text-align: center;
-            padding: 25px;
         }
 
-        .card-header h2 {
+        .judul h2 {
             margin: 0;
             font-weight: bold;
         }
 
-        .hasil {
-            font-size: 40px;
+        .hasil-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        #hasil {
+            font-size: 45px;
             font-weight: bold;
             color: #198754;
-            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        #infoHasil {
+            font-size: 18px;
+            color: #6c757d;
         }
     </style>
 </head>
@@ -52,13 +64,13 @@
     <div class="card shadow">
 
         <!-- Judul -->
-        <div class="card-header">
+        <div class="judul">
             <h2>Kalkulator Sistem Bilangan</h2>
         </div>
 
         <div class="card-body p-4">
 
-            <!-- Input Bilangan -->
+            <!-- Input -->
             <div class="mb-4">
                 <label for="angka" class="form-label fw-bold">
                     Masukkan Bilangan
@@ -101,112 +113,50 @@
             </div>
 
             <!-- Tombol -->
-            <button
-                type="button"
-                onclick="konversikan()"
-                class="btn btn-primary btn-lg w-100">
-                Konversi
-            </button>
+            <div class="d-flex gap-2">
+
+                <button
+                    type="button"
+                    onclick="konversikan()"
+                    class="btn btn-primary btn-lg w-100">
+                    Konversi
+                </button>
+
+                <button
+                    type="button"
+                    onclick="resetForm()"
+                    class="btn btn-secondary btn-lg">
+                    Reset
+                </button>
+
+            </div>
 
             <hr class="my-4">
 
             <!-- Hasil -->
-            <div class="text-center">
+            <div class="hasil-box text-center">
 
-                <div class="fs-5 fw-bold mb-2">
-                    Hasil Konversi:
+                <div class="fw-bold fs-5 mb-2">
+                    Hasil Konversi
                 </div>
 
-                <div id="hasil" class="hasil">
+                <div id="hasil">
                     -
+                </div>
+
+                <div id="infoHasil">
+                    Pilih sistem bilangan lalu tekan Konversi
                 </div>
 
             </div>
 
         </div>
+
+        <!-- Footer -->
+        <div class="text-center text-secondary pb-3">
+            Kalkulator Konversi Sistem Bilangan
+        </div>
+
     </div>
 
-</div>
-
-
-<script>
-
-function konversikan() {
-
-    // Mengambil nilai dari input
-    let angka = document.getElementById("angka").value.trim();
-
-    let sistemInput = parseInt(
-        document.getElementById("sistemInput").value
-    );
-
-    let sistemHasil = parseInt(
-        document.getElementById("sistemHasil").value
-    );
-
-    let hasil = document.getElementById("hasil");
-
-
-    // Jika input kosong
-    if (angka === "") {
-
-        hasil.innerHTML = "Masukkan angka!";
-
-        return;
-    }
-
-
-    // Bersihkan format hex seperti 0xFF
-    if (sistemInput === 16) {
-        angka = angka.replace(/^0x/i, "");
-    }
-
-
-    // Validasi berdasarkan sistem bilangan
-    let pola;
-
-    if (sistemInput === 2) {
-
-        pola = /^[01]+$/;
-
-    } else if (sistemInput === 8) {
-
-        pola = /^[0-7]+$/;
-
-    } else if (sistemInput === 10) {
-
-        pola = /^[0-9]+$/;
-
-    } else if (sistemInput === 16) {
-
-        pola = /^[0-9a-fA-F]+$/;
-    }
-
-
-    // Jika angka tidak sesuai dengan basis
-    if (!pola.test(angka)) {
-
-        hasil.innerHTML = "Input tidak valid!";
-
-        return;
-    }
-
-
-    // Konversi ke desimal
-    let desimal = parseInt(angka, sistemInput);
-
-
-    // Konversi dari desimal ke sistem tujuan
-    let hasilKonversi = desimal
-        .toString(sistemHasil)
-        .toUpperCase();
-
-
-    // Menampilkan hasil
-    hasil.innerHTML = hasilKonversi;
-}
-
-</script>
-
-</body>
-</html>
+</div
